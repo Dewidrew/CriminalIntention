@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -35,8 +34,8 @@ public class CrimeListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_crime_list, container,false);
 
-        _crimeRecyclerView = (RecyclerView) v.findViewById(R.id.crime_recycler_view);
-        _crimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        _crimeRecyclerView = (RecyclerView) v.findViewById(R.id.crime_recycler_view); // Bind Recycle Layout
+        _crimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity())); // set LinearLayout in Recycle Layout && get activity(CrimeListActivity) and send with layout
 
         updateUI();
         return v;
@@ -47,11 +46,11 @@ public class CrimeListFragment extends Fragment {
      * Update UI
      */
     private void updateUI(){
-        CrimeLab crimeLab = CrimeLab.getInstance();
-        List<Crime> crimes = crimeLab.getCrime();
+        CrimeLab crimeLab = CrimeLab.getInstance(getActivity());
+        List<Crime> crimes = crimeLab.getCrime(); // create list
         if(_adapter==null){
-            _adapter = new CrimeAdapter(crimes);
-            _crimeRecyclerView.setAdapter(_adapter);
+            _adapter = new CrimeAdapter(crimes); // set list to Adapter
+            _crimeRecyclerView.setAdapter(_adapter); // set Adapter to recycleview
         }else{
 //            _adapter.notifyDataSetChanged();
 
@@ -113,12 +112,8 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-//            Toast.makeText(getActivity(),
-//                    "Press!"+_titleTextView.getText(),
-//                    Toast.LENGTH_SHORT)
-//                    .show();
             Log.d(TAG, "Send position ; "+ _position);
-            Intent intent = CrimeActivity.newIntent(getActivity(),_crime.getId(),_position);
+            Intent intent = CrimePagerActivity.newIntent(getActivity(),_crime.getId(),_position);
             startActivityForResult(intent,REQUEST_UPDATED_CRIME);
         }
     }

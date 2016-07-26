@@ -1,16 +1,13 @@
 package com.augmentis.ayp.crimin;
 
-import android.annotation.TargetApi;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.BundleCompat;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -53,7 +50,7 @@ public class CrimeFragment extends Fragment{
         super.onCreate(savedInstanceState);
         UUID crimeId =(UUID) getArguments().getSerializable(CRIME_ID);
         position  = getArguments().getInt(CRIME_POSITION);
-        crime = CrimeLab.getInstance().getCrimeById(crimeId) ;
+        crime = CrimeLab.getInstance(getActivity()).getCrimeById(crimeId) ;
 //        Log.d(CrimeListFragment.TAG,"crime.getId()=" + crime.getId());
         Log.d(CrimeListFragment.TAG,"crime.getTitle()=" + crime.getTitle());
     }

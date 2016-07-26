@@ -1,9 +1,5 @@
 package com.augmentis.ayp.crimin;
 
-import android.annotation.TargetApi;
-import android.icu.text.SimpleDateFormat;
-import android.os.Build;
-
 import java.util.Date;
 import java.util.UUID;
 

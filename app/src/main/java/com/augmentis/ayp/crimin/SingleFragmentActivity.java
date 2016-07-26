@@ -15,11 +15,16 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 
         Log.d(CrimeListFragment.TAG,"On create activity");
 
+
+        //Create Fragment Container
         FragmentManager fm = getSupportFragmentManager();
         Fragment f =fm.findFragmentById(R.id.fragment_container);
 
+
         if( f == null){
-            f = onCreateFragment();
+            f = onCreateFragment(); // Create Fragment
+
+            // Set Fragment to Fragment Container
             fm.beginTransaction()
                     .add(R.id.fragment_container,f)
                     .commit();
