@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,7 +25,8 @@ public class CrimeListFragment extends Fragment {
 
     private RecyclerView _crimeRecyclerView;
 
-    private CrimeAdapter _adapter;
+    protected static CrimeAdapter _adapter;
+    private static List<Integer> positionChanged;
 
     protected static final String TAG = "CRIME_LIST";
     private int crimePos;
@@ -33,7 +35,6 @@ public class CrimeListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_crime_list, container,false);
-
         _crimeRecyclerView = (RecyclerView) v.findViewById(R.id.crime_recycler_view); // Bind Recycle Layout
         _crimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity())); // set LinearLayout in Recycle Layout && get activity(CrimeListActivity) and send with layout
 
@@ -58,6 +59,36 @@ public class CrimeListFragment extends Fragment {
         }
     }
 
+    public static void addPosition(int i){
+        if(positionChanged == null){
+            positionChanged = new ArrayList<>();
+            positionChanged.add(i);
+        }else{
+            positionChanged.add(i);
+        }
+    }
+
+    public static boolean isSamePositionFromList(int i){
+        if(positionChanged != null) {
+            for (Integer temp : positionChanged) {
+                if (temp == i) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private void notifyArrayPosition(){
+        if(positionChanged != null) {
+            for (Integer i : positionChanged) {
+                _adapter.notifyItemChanged(i);
+                Log.d(TAG,"Position Changed"+i);
+            }
+            positionChanged.clear();
+        }
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +99,7 @@ public class CrimeListFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Log.d(TAG,"Resume list");
+        notifyArrayPosition();
         updateUI();
     }
 
@@ -76,6 +108,7 @@ public class CrimeListFragment extends Fragment {
         if(requestCode == REQUEST_UPDATED_CRIME){
             if(resultCode == Activity.RESULT_OK){
                 crimePos = (int) data.getExtras().get("position");
+                _adapter.notifyItemChanged(crimePos);
                 Log.d(TAG, "get crimePos=" + crimePos);
             }
             //Blah blah

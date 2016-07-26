@@ -70,6 +70,9 @@ public class CrimeFragment extends Fragment{
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int after) {
                     crime.setTitle(s.toString());
+                if(!CrimeListFragment.isSamePositionFromList(position)) {
+                    CrimeListFragment.addPosition(position);
+                }
             }
 
             @Override
@@ -87,6 +90,9 @@ public class CrimeFragment extends Fragment{
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
                 crime.setSolved(isChecked);
+                if(!CrimeListFragment.isSamePositionFromList(position)) {
+                    CrimeListFragment.addPosition(position);
+                }
                 Log.d(CrimeListFragment.TAG,"Crime" + crime.toString());
             }
         });

@@ -46,6 +46,11 @@ public class CrimePagerActivity extends FragmentActivity {
             }
         });
 
+        //set posiiton
+        int position = CrimeLab.getInstance(this).getCrimePositionById(_crimeId);
+        _viewPager.setCurrentItem(position);
+
+
     }
     protected static final String CRIME_ID = "crimeActivity.crimeId";
     protected static final String CRIME_POSITION = "crimeActivity.crimePos";
