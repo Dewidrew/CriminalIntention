@@ -108,7 +108,6 @@ public class CrimeListFragment extends Fragment {
         if(requestCode == REQUEST_UPDATED_CRIME){
             if(resultCode == Activity.RESULT_OK){
                 crimePos = (int) data.getExtras().get("position");
-                _adapter.notifyItemChanged(crimePos);
                 Log.d(TAG, "get crimePos=" + crimePos);
             }
             //Blah blah
